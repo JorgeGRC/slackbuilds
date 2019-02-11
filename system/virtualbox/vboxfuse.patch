@@ -1,0 +1,10 @@
+--- VirtualBox-5.2.26/src/VBox/ImageMounter/VBoxFUSE-old/VBoxFUSE.cpp      2018-10-15 10:31:04.000000000 -0400
++++ VirtualBox-5.2.26/src/VBox/ImageMounter/VBoxFUSE/VBoxFUSE.cpp   2019-02-11 11:31:30.587919884 -0500
+@@ -53,6 +53,7 @@
+ #include <iprt/initterm.h>
+ #include <iprt/stream.h>
+ 
++#define PVBOXHDD PVDISK
+ 
+ /*********************************************************************************************************************************
+ *   Structures and Typedefs                                                                                                      *

@@ -2,6 +2,7 @@
 
 # Slackware build script for virtualbox-ose
 
+# Copyright 2019 Peter Willis <peterwwillis@gmail.com>
 # Copyright 2008-2017 Heinz Wiesinger, Amsterdam, The Netherlands
 # Copyright 2008 Mauro Giachero <mauro.giachero@gmail.com>
 # All rights reserved.
@@ -25,7 +26,7 @@
 
 PRGNAM=virtualbox
 SRCNAM=VirtualBox
-VERSION=${VERSION:-5.0.40}
+VERSION=${VERSION:-5.2.26}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 
@@ -62,7 +63,7 @@ else
   harden="--disable-hardening"
 fi
 
-# Support for the qt4-frontend
+# Support for the qt5-frontend
 if [ "${HEADLESS:-no}" = "no" ]; then
   guiapp="VirtualBox VBoxSDL"
 else
@@ -138,8 +139,20 @@ patch -p1 -i $CWD/virtualbox-gsoap.patch
 # Fix wrong path to rdesktop-vrdp-keymaps
 patch -p1 -i $CWD/006-rdesktop-vrdp-keymap-path.patch
 
+# Fix VBoxFUSE missing typedef
+patch -p1 -i $CWD/vboxfuse.patch
+
 # Remove gcc version check
 sed -i 's/^check_gcc$/#check_gcc/' ./configure
+
+# Explicitly enable c++11 for Qt5, since we assume we have GCC >= 4.8
+sed -i '1507 s/^.*$/FLGQT5="$FLGQT5 -std=c++11"/' ./configure
+
+# Apparently pkg-config is not working?
+# This may not be necessary anymore, but there was an issue where pkg-config
+# was not correctly passing the path to the QT libs (and breaking on a QTOpenGL
+# build item).
+SLKCFLAGS="$SLKCFLAGS -I/usr/include/qt5 -I/usr/include/qt5/QTOpenGL"
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
@@ -171,7 +184,7 @@ mkdir -p $PKG/usr/{lib$LIBDIRSUFFIX,share,include}/virtualbox \
   $PKG/usr/share/{pixmaps,mime/packages} \
   $PKG/etc/{default,rc.d,vbox}
 
-for i in vboxdrv.sh.in vboxballoonctrl-service.sh vboxautostart-service.sh; do
+for i in vboxdrv.sh vboxballoonctrl-service.sh vboxautostart-service.sh; do
   SCRIPT=$(echo $i | cut -d "." -f 1)
   cp -f src/VBox/Installer/linux/$i $PKG/etc/rc.d/rc.$SCRIPT.new
   sed -i "s/%PACKAGE%/virtualbox/g" $PKG/etc/rc.d/rc.$SCRIPT.new

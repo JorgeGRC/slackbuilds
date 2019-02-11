@@ -1,16 +1,17 @@
 PRGNAM="virtualbox"
-VERSION="5.0.40"
+VERSION="5.2.26"
 HOMEPAGE="https://www.virtualbox.org"
-DOWNLOAD="http://download.virtualbox.org/virtualbox/5.0.40/VirtualBox-5.0.40.tar.bz2 \
-          http://download.virtualbox.org/virtualbox/5.0.40/VBoxGuestAdditions_5.0.40.iso \
-          http://download.virtualbox.org/virtualbox/5.0.40/UserManual.pdf \
-          http://download.virtualbox.org/virtualbox/5.0.40/SDKRef.pdf"
-MD5SUM="53b259e48a137b0185c169590e2dcb77 \
-        71afc65e09d1d4d02020f0403ac47622 \
-        bdc4bf38dd3ed786385044841a4af147 \
-        684ac3f7d17532cd8396ea83ba1d57ea"
+DOWNLOAD="http://download.virtualbox.org/virtualbox/5.2.26/VirtualBox-5.2.26.tar.bz2 \
+          http://download.virtualbox.org/virtualbox/5.2.26/VBoxGuestAdditions_5.2.26.iso \
+          http://download.virtualbox.org/virtualbox/5.2.26/UserManual.pdf \
+          http://download.virtualbox.org/virtualbox/5.2.26/SDKRef.pdf"
+MD5SUM="4e84cd1aecb67e3f59b3ee06292bb2d0 \
+	e97c15595392a7c918ae119bc85211c0 \
+	97042f30152ce51de7e382a9fafc8ebb \
+	b314fa498be1b4a3753bcf3495e4bb34"
+
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="acpica virtualbox-kernel"
+REQUIRES="acpica opus qt5 virtualbox-kernel"
 MAINTAINER="Heinz Wiesinger"
 EMAIL="pprkut@liwjatan.at"
